@@ -1,0 +1,55 @@
+<html lang='en'>
+<head>
+<img src="/psclient/images/mainImages/LOGOcropped2Circle.png" alt="Logo" width="100" height="110" align="left"/>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src='/psclient/js/SignIn.js' async></script>
+</head>
+<body style="background-color:black">
+  <h1 style="color:white">Presumptuous Sips</h1>
+  <h2 style="color:white">P.S. . . Baddies, Emos, and all, Welcome!</h2>
+  <p style="color:white">The Coffee Shop for Emos and Baddies</p>
+</body>
+<table border="2" width="100%" bgcolor="hotpink" height="8%">
+  <tr>
+    <th width="15%"><font color="white" size="3"><a href="/psclient/HTMLcode/HomePage.html"><I>HOME</I></a></font></th>
+    <th width="15%"><font color="white" size="3"><a href="/psclient/HTMLcode/Menu.html"><I> MENU</I></a></font></th>
+    <th width="15%"><font color="white" size="3"><a href="/psclient/HTMLcode/About.html"><I> ABOUT</I></a></font></th>
+    <th width="15%"><font color="white" size="3"><a href="/psclient/HTMLcode/Contact.html"><I> CONTACT</I></a></font></th>
+    <th width="15%"><font color="white" size="3"><a href="/psclient/HTMLcode/Subscriptions.html"><I> SUBSCRIPTIONS</I></a></font></th>
+    <th width="15%"><font color="white" size="3"><a href="/psclient/HTMLcode/WorkWithUs.html"><I> WORK WITH US</I></a></font></th>
+    <th width="15%"><font color="white" size="3"><a href="/psclient/HTMLcode/SignIn.html"><I> SIGN IN</I></a></font></th>
+    <!-- <th width="15%"><font color="white" size="3"><a href="/psclient/HTMLcode/Cart.html"><I> CART</I></a></font></th> -->
+  </tr>
+</table>
+<!--Reference: https://www.w3schools.com/html/html_forms.asp-->
+<style>
+  div{
+    color:white;
+  }
+</style>
+<div>
+<h1 style="color:hotpink">Sign In: </h1>
+
+<form style="font-size: 25;width: 100%; height:70%">
+  <label for="email">Email:</label><br>
+  <input style="font-size: 20; height:30px; width:250px" type="text" id="email"><br>
+
+  <label for="password">Password:</label><br>
+  <input style="font-size: 20; height:30px; width:250px"type="password" id="password" autocomplete="on"><br>
+
+  <input type="checkbox" id="showPass" showPass="showPass"><br>
+  <label style="font-size: 20; height:30px; width:250px"for="showPass">Show Password.</label><br>
+
+
+<div id="loginErr" hidden>
+  <label>Invalid User ID and/or Password.</label>
+</div>
+
+<center>
+  <button id="signin" style="font-size: 20; height:40px; width:100px; color:white; background-color:hotpink" >Sign In</button><br>
+  <button id="CreateNewAcc" style="font-size: 20; height:40px; width:200px; color:white; background-color:pink" >Create New Account</button>
+</center>
+</form>
+<h3>Sign in for P.S. account! Earn rewards. Manage Subscriptions. Explore P.S.</h3>
+</div>
+</html>
