@@ -1,22 +1,27 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const psapp = express();
 const path = require('path');
 const bodyParser = require('body-parser');
 
+
 psapp.use(cors());
 
-psapp.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  next();
-});
+psapp.use(cors({ origin: process.env.CLIENT_ORIGIN || 'http://localhost:6363' }));
 
 psapp.use(bodyParser.json());
 psapp.use(bodyParser.urlencoded({extended:false}));
 psapp.use("/psclient", express.static(path.resolve(__dirname + "/../psclient/")));
 
+
+const customerRoutes = require('./routes/customerRoutes');
+const errorHandler = require('./middleware/errorHandler');
+
+psapp.use('/', customerRoutes);
+
+
 //make the server
-var psserver;
 var port = process.env.PORT || process.env.NODE_PORT || 6363;
 
 //page routers
@@ -27,8 +32,12 @@ psrouter(psapp);
 var psservices = require('./psservices.js');
 psservices(psapp);
 
+//error handling - must be used after every route
+psapp.use(errorHandler);
+
+
 //listen
-psserver = psapp.listen(port, function(err){
+psapp.listen(port, function(err){
   if(err){
     throw err;
   } else{

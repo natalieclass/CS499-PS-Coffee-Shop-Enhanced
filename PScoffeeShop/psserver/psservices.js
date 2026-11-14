@@ -1,4 +1,3 @@
-require('dotenv').config();
 const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -13,7 +12,7 @@ connection.connect((err) =>{
 });
 
 var psservices = function(psapp) {
-  psapp.post('/create-account', function(req,res){
+  /*psapp.post('/create-account', function(req,res){
     var data = {
       email: req.body.email,
       firstName: req.body.firstName,
@@ -34,7 +33,7 @@ var psservices = function(psapp) {
       }
     });
 
-  });
+  });*/
 
   psapp.post('/submit-feedback', function(req,res){
     var data = {
@@ -43,16 +42,16 @@ var psservices = function(psapp) {
       email: req.body.email,
       feedback: req.body.feedback
     };
-console.log("we before query");
-    connection.query("INSERT INTO Contact SET ?", data, function(err, results){
-      if(err){
-         return res.status(201).send(JSON.stringify({msg: "Error:" + err}))
-      } else {
-        return res.status(201).send(JSON.stringify({msg: "SUCCESS"}));
-      }
-    });
+  console.log("we before query");
+      connection.query("INSERT INTO Contact SET ?", data, function(err, results){
+        if(err){
+          return res.status(201).send(JSON.stringify({msg: "Error:" + err}))
+        } else {
+          return res.status(201).send(JSON.stringify({msg: "SUCCESS"}));
+        }
+      });
 
-  });
+    });
 
     psapp.get('/sign-in', function(req,res){
       console.log("we are in the sign in get");
@@ -119,7 +118,7 @@ console.log("we before query");
       });
     });
 
-
 };
+  
 
 module.exports = psservices;
