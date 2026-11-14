@@ -26,4 +26,24 @@ async function register(input) {
   return { userID, email: input.email };
 }
 
-module.exports = { register };
+
+async function login(input) {
+  const customer = await customerRepository.findByEmail(input.email);
+
+  // One error object for both failure paths, deliberately.
+  const invalid = new Error('Invalid email or password');
+  invalid.status = 401;
+
+  if (!customer) {
+    throw invalid;
+  }
+
+  const matches = await bcrypt.compare(input.password, customer.password);
+  if (!matches) {
+    throw invalid;
+  }
+
+  return { userID: customer.userID, email: customer.email };
+}
+
+module.exports = { register, login };

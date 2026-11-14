@@ -15,4 +15,13 @@ const createAccountRules = [
 //job is to check the input, reect it if bad, otherwise hand to the controller
 router.post('/create-account', createAccountRules, validate, customerController.createAccount);
 
+
+
+
+const signInRules = [
+  body('email').isEmail().withMessage('A valid email address is required'),
+  body('password').notEmpty().withMessage('Password is required')
+];
+
+router.post('/sign-in', signInRules, validate, customerController.signIn);
 module.exports = router;

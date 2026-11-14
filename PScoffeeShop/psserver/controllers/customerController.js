@@ -22,4 +22,19 @@ async function createAccount(req, res, next) {
   }
 }
 
-module.exports = { createAccount };
+
+async function signIn(req, res, next) {
+  try {
+    //await lets asynchronous steps run in order 
+    const customer = await customerService.login({
+      email: req.body.email,
+      password: req.body.password
+    });
+
+    res.status(200).json({ userID: customer.userID });
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { createAccount, signIn };

@@ -14,24 +14,17 @@ $('#signin').click(function(){
 
   $.ajax({
       url: "http://localhost:6363" + "/sign-in",
-      type: "get",
+      type: "post",
       data: signInString,
-      success: function(response){
-          var res= JSON.parse(response);
-            if (res.msg==="SUCCESS"){
-              localStorage.setItem("userID",res.userID);
-              location.replace("http://localhost:6363"+"/PSDashboard");
-            } else if (res.msg==="Login Error: Check your email or/and password is correct.") {
-              $("#loginErr").css("visbility","visible");
-              alert(res.msg);
-            }else {
-              alert(res.msg);
-            }
-      }, error: function(err){
-              alert(err);
-            }
+      success: function(res){
+        localStorage.setItem("userID", res.userID);
+        location.replace("http://localhost:6363/PSDashboard");
+      },
+      error: function(xhr){
+        alert(xhr.responseJSON ? xhr.responseJSON.message : "Sign in failed");
+      }
   });
-
+  return false;
 });
 
 //Refernce: https://www.w3schools.com/howto/howto_js_toggle_password.asp

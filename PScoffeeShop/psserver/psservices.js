@@ -34,7 +34,7 @@ var psservices = function(psapp) {
     });
 
   });*/
-
+/*
   psapp.post('/submit-feedback', function(req,res){
     var data = {
       fullName: req.body.fullName,
@@ -53,12 +53,12 @@ var psservices = function(psapp) {
 
     });
 
-    psapp.get('/sign-in', function(req,res){
-      console.log("we are in the sign in get");
+    //psapp.get('/sign-in', function(req,res){
+    //  console.log("we are in the sign in get");
       var email= req.query.email;
       var password= req.query.password;
-      console.log(req.query.email);
-      console.log(req.query.password);
+    //  console.log(req.query.email);
+    //  console.log(req.query.password);
 
       connection.query("SELECT * FROM Customer WHERE email = ? AND password = ?", [email, password], function(err, results){
         if(err){
@@ -71,7 +71,7 @@ var psservices = function(psapp) {
           }
         }
       });
-    });
+  */
 
     psapp.get('/memberInformation', function(req,res){
       console.log("we are in member informaiton services");

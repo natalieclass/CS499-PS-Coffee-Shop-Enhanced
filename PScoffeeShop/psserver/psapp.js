@@ -17,7 +17,8 @@ psapp.use("/psclient", express.static(path.resolve(__dirname + "/../psclient/"))
 
 const customerRoutes = require('./routes/customerRoutes');
 const errorHandler = require('./middleware/errorHandler');
-
+const contactRoutes = require('./routes/contactRoutes');
+psapp.use('/', contactRoutes);
 psapp.use('/', customerRoutes);
 
 
