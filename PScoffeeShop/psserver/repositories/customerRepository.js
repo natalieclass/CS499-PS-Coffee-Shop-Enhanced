@@ -32,4 +32,25 @@ async function insert(customer) {
   return result.insertId;
 }
 
-module.exports = { findByEmail, insert };
+async function findById(userID) {
+  const [rows] = await pool.query(
+    'SELECT * FROM Customer WHERE userID = ?',
+    [userID]
+  );
+  return rows[0];
+}
+
+async function update(userID, customer) {
+  const [result] = await pool.query(
+    `UPDATE Customer
+        SET email = ?, firstName = ?, lastName = ?, password = ?, custPhone = ?,
+            street = ?, city = ?, state = ?, zipCode = ?, country = ?
+      WHERE userID = ?`,
+    [customer.email, customer.firstName, customer.lastName, customer.password,
+     customer.custPhone, customer.street, customer.city, customer.state,
+     customer.zipCode, customer.country, userID]
+  );
+  return result.affectedRows;
+}
+
+module.exports = { findByEmail, findById, insert, update };

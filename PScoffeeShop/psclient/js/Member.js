@@ -29,18 +29,12 @@ console.log(newString);
       url: "http://localhost:6363" + "/memberInformationEdit",
       type: "put",
       data: newString,
-      success: function(response){
-      console.log(response);
-      var res= JSON.parse(response);
-      if (res.msg==="SUCCESS"){
-        document.getElementById("submitNewInfo").hidden = true;
-        document.getElementById("memberInfoFS").disabled = true;
-    }else {
-      alert(res.msg);
-    }
-}, error: function(err){
-        alert(err);
-      }
+        success: function(res){
+          document.getElementById("submitNewInfo").hidden = true;
+          document.getElementById("memberInfoFS").disabled = true;
+        }, error: function(xhr){
+        alert(xhr.responseJSON ? xhr.responseJSON.message : "Update failed");
+        }
 });
 return false;
 });
@@ -57,25 +51,17 @@ $.ajax({
       url: "http://localhost:6363" + "/memberInformation",
       type: "get",
       data: jsonString,
-      success: function(response){
-        console.log(response);
-        var res= JSON.parse(response);
-          if (res.msg==="SUCCESS"){
-            $('#email').val(res.userData.email);
-            $('#password').val(res.userData.password);
-            $('#firstName').val(res.userData.firstName);
-            $('#lastName').val(res.userData.lastName);
-            $('#phone').val(res.userData.custPhone);
-            $('#street').val(res.userData.street);
-            $('#city').val(res.userData.city);
-            $('#state').val(res.userData.state);
-            $('#zipCode').val(res.userData.zipCode);
-            $('#country').val(res.userData.country);
-
-          }else {
-            alert(res.msg);
-          }
-      }, error: function(err){
-              alert(err);
-            }
+        success: function(res){
+          $('#email').val(res.email);
+          $('#firstName').val(res.firstName);
+          $('#lastName').val(res.lastName);
+          $('#phone').val(res.custPhone);
+          $('#street').val(res.street);
+          $('#city').val(res.city);
+          $('#state').val(res.state);
+          $('#zipCode').val(res.zipCode);
+          $('#country').val(res.country);
+      }, error: function(xhr){
+        alert(xhr.responseJSON ? xhr.responseJSON.message : "Could not load member information");
+      }
   });

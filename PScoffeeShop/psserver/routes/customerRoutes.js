@@ -1,6 +1,5 @@
 const express = require('express');
-const { body } = require('express-validator');
-const customerController = require('../controllers/customerController');
+const { body, query } = require('express-validator');const customerController = require('../controllers/customerController');
 const validate = require('../middleware/validate');
 
 const router = express.Router();
@@ -24,4 +23,24 @@ const signInRules = [
 ];
 
 router.post('/sign-in', signInRules, validate, customerController.signIn);
+
+
+
+
+const memberRules = [
+  query('userID').isInt().withMessage('A valid userID is required')
+];
+
+const editRules = [
+  body('userID').isInt().withMessage('A valid userID is required'),
+  body('email').isEmail().withMessage('A valid email address is required'),
+  body('firstName').trim().notEmpty().withMessage('First name is required'),
+  body('lastName').trim().notEmpty().withMessage('Last name is required')
+];
+
+router.get('/memberInformation', memberRules, validate, customerController.getMember);
+router.put('/memberInformationEdit', editRules, validate, customerController.editMember);
+
+
+
 module.exports = router;

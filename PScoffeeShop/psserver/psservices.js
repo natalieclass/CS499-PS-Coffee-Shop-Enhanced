@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+/* const mysql = require('mysql2');
 const connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -11,7 +11,7 @@ connection.connect((err) =>{
   console.log('Connected to MYSQL!');
 });
 
-var psservices = function(psapp) {
+/* var psservices = function(psapp) {
   /*psapp.post('/create-account', function(req,res){
     var data = {
       email: req.body.email,
@@ -71,7 +71,7 @@ var psservices = function(psapp) {
           }
         }
       });
-  */
+  
 
     psapp.get('/memberInformation', function(req,res){
       console.log("we are in member informaiton services");
@@ -122,3 +122,4 @@ var psservices = function(psapp) {
   
 
 module.exports = psservices;
+*/

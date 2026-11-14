@@ -1,44 +1,24 @@
 const path = require('path');
 
-//page routers
-var psrouter = function(psapp){
-  psapp.get("/", function(req, res) {
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/HomePage.html"));
-  });
+const PAGES = {
+  '/': 'HomePage.html',
+  '/SignIn': 'SignIn.html',
+  '/CreateAccount': 'CreateAccount.html',
+  '/PSDashboard': 'PSDashboard.html',
+  '/Contact': 'Contact.html',
+  '/SyrupsNSauces': 'SyrupsSauces.html',
+  '/WorkWithUs': 'WorkWithUs.html',
+  '/Member': 'Member.html',
+  '/About': 'About.html',
+  '/Menu': 'Menu.html',
+  '/Subscriptions': 'Subscriptions.html'
+};
 
-  psapp.get("/SignIn", function(req, res) {
-    console.log("we are signing in ");
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/SignIn.html"));
-  });
-
-  psapp.get("/CreateAccount", function(req, res) {
-console.log("we creating account");
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/CreateAccount.html"));
-  });
-
-  psapp.get("/PSDashboard", function(req, res) {
-    console.log("we are in the dashboard");
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/PSDashboard.html"));
-  });
-
-  psapp.get("/Contact", function(req, res) {
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/Contact.html"));
-  });
-
-  psapp.get("/SyrupsNSauces", function(req, res) {
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/SyrupsSauces.html"));
-  });
-
-  psapp.get("/WorkWithUs", function(req, res) {
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/WorkWithUs.html"));
-  });
-
-  psapp.get("/Cart", function(req, res) {
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/Cart.html"));
-  });
-
-  psapp.get("/Member", function(req, res) {
-    res.status(200).sendFile(path.join(__dirname + "/../psclient/HTMLcode/Member.html"));
+const psrouter = function (psapp) {
+  Object.entries(PAGES).forEach(([route, file]) => {
+    psapp.get(route, function (req, res) {
+      res.status(200).sendFile(path.join(__dirname, '..', 'psclient', 'HTMLcode', file));
+    });
   });
 };
 

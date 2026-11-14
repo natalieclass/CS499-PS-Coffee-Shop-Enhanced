@@ -46,4 +46,31 @@ async function login(input) {
   return { userID: customer.userID, email: customer.email };
 }
 
-module.exports = { register, login };
+async function findMember(userID) {
+  const customer = await customerRepository.findById(userID);
+  if (!customer) {
+    const err = new Error('Member not found');
+    err.status = 404;
+    throw err;
+  }
+
+  const { password, ...safe } = customer;
+  return safe;
+}
+
+async function updateMember(userID, input) {
+  const existing = await customerRepository.findById(userID);
+  if (!existing) {
+    const err = new Error('Member not found');
+    err.status = 404;
+    throw err;
+  }
+
+  const password = input.password
+    ? await bcrypt.hash(input.password, SALT_ROUNDS)
+    : existing.password;
+
+  await customerRepository.update(userID, { ...input, password });
+}
+
+module.exports = { register, login, findMember, updateMember  };

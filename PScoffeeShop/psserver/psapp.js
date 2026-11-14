@@ -29,10 +29,6 @@ var port = process.env.PORT || process.env.NODE_PORT || 6363;
 var psrouter = require('./psrouter.js');
 psrouter(psapp);
 
-//services listeners
-var psservices = require('./psservices.js');
-psservices(psapp);
-
 //error handling - must be used after every route
 psapp.use(errorHandler);
 
