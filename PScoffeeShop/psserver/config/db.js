@@ -1,5 +1,5 @@
 //using creatPool instead of createConnection, so a conncetion is not held open forever. connections are reused
-require('dotenv').config();
+require('dotenv').config({ quiet: true });
 const mysql = require('mysql2');
 
 const pool = mysql.createPool({
