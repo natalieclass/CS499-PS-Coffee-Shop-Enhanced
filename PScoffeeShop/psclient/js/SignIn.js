@@ -1,5 +1,4 @@
 //submit info
-console.log("we before create acc");
 $('#CreateNewAcc').click(function(){
 location.assign("http://localhost:6363"+"/CreateAccount");
 alert("Redirecting you to new page.");
@@ -7,10 +6,9 @@ alert("Redirecting you to new page.");
 
 $('#signin').click(function(){
   var email = $('#email').val();
-	var password = $('#password').val();
+  var password = $('#password').val();
 
-	var signInString = {email:email, password:password};
-  console.log(signInString);
+  var signInString = {email:email, password:password};
 
   $.ajax({
       url: "http://localhost:6363" + "/sign-in",
