@@ -44,11 +44,11 @@ const CATALOG = {
   },
   
   'DVG-CARAMEL': {
-    name: 'DVG Sugar Free Caramel  Syrup',
+    name: 'DVG Caramel  Syrup',
     priceCents: 721,
     size: '25.4 FL OZ',
     category: 'syrup',
-    image: '/psclient/images/DVG/DVGCaramel.jpeg',
+    image: '/psclient/images/DVG/DVGsfCaramel.jpeg',
     alt: 'Caramel'
   },
   
@@ -69,6 +69,7 @@ const CATALOG = {
     image: '/psclient/images/DVG/DVGstrawberry.jpeg',
     alt: 'Strawberry'
   }
+
 };
 
 if (typeof module !== 'undefined') {
