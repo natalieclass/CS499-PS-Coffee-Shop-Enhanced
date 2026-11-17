@@ -6,6 +6,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src='/psclient/js/catalog.js' defer></script>
 	<script src='/psclient/js/cart.js' defer></script>
+	<script src='/psclient/js/productQuery.js' defer></script>
 	<script src='/psclient/js/SyrupsSauces.js' defer></script>
 	<!-- <link rel="stylesheet" type="text/css" href="/psclient/css/Subscriptions.css"> -->
 	<script src='/psclient/js/LogOut.js' defer></script>
@@ -27,7 +28,17 @@
 	</table>
 
 	<h1 style="color:hotpink">Shopping Cart: Syrups N Sauces</h1>
-
+	<div id="productControls" align="center">
+		<label>Search: <input type="text" id="searchBox" placeholder="e.g. vanilla"></label>
+		&nbsp;&nbsp;
+		<label>Sort by:
+			<select id="sortSelect">
+				<option value="name">Name (A–Z)</option>
+				<option value="price-asc">Price: low to high</option>
+				<option value="price-desc">Price: high to low</option>
+			</select>
+		</label>
+	</div>
 	<center><h2 style="color:pink">DaVinci Gourmet Syrups</h2></center>
 	<table id="syrupsTable">
 		<tr id="syrupsRow" align="center"></tr>
