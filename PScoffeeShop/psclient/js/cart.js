@@ -74,7 +74,8 @@ function setQuantity(sku, qty) {
   const oldLineTotal = lineTotalCents(sku);     // read BEFORE writing: 0 on first call
   const newLineTotal = product.priceCents * n;  // 765 * 2 = 1530
 
-  // adjust subtotalCents using oldLineTotal and newLineTotal.
+// subtract the old line total and add the new one, so the subtotal
+// stays correct without rescanning the cart
   subtotalCents = subtotalCents - oldLineTotal + newLineTotal;
 
   if (n === 0) {

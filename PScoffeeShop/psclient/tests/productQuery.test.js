@@ -37,7 +37,6 @@ test('price-asc puts the cheapest product first', () => {
 
 
 test('price-desc puts the most expensive product first', () => {
-  // same, reversed
   const result = pq.queryCatalog('syrup', '', 'price-desc');
   
   expect(prices(result)).toEqual([765, 721, 678, 632, 545]);

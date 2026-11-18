@@ -107,6 +107,15 @@ psserver/
 ├── psapp.js                     Application setup and startup
 └── psrouter.js                  Static page routes
 ```
+psclient/
+├── js/
+│   ├── catalog.js               Product data keyed by SKU, prices in integer cents
+│   ├── cart.js                  Cart state and money arithmetic; no DOM, no jQuery
+│   ├── productQuery.js          Category filtering, search and sorting
+│   └── SyrupsSauces.js          Renders the shop page from the catalog
+└── tests/
+    ├── cart.test.js
+    └── productQuery.test.js
 
 Each layer has one responsibility. Routes know URLs, controllers know HTTP,
 services know the business rules, and repositories know SQL. A layer only talks to
@@ -134,16 +143,14 @@ exists above the repository layer.
 npm test
 ```
 
-Six unit tests cover the service layer. They verify that registration rejects a
-duplicate email with a 409 and performs no insert, that the password reaching the
-database is a bcrypt hash rather than the plaintext the user typed, that sign-in
-rejects both an unknown email and an incorrect password with a 401, and that
-repository errors propagate to the caller rather than being swallowed.
+Twenty-one unit tests across four suites, none of which need a database or a browser.
 
-The tests run without a database. The repository layer is replaced with mocks, so
-the business rules are exercised in isolation. This was not possible before the
-enhancement, when the same function handled the HTTP request, the business logic
-and the SQL query.
+- `psserver/tests/customerService.test.js` — registration rejects a duplicate email with a 409 and performs no insert, the password reaching the database is a bcrypt hash rather than the plaintext the user typed, and sign-in rejects both an unknown email and an incorrect password with a 401.
+- `psserver/tests/contactService.test.js` — feedback is stored, and repository errors propagate to the caller rather than being swallowed.
+- `psclient/tests/cart.test.js` — the subtotal is correct with multiple items, changing a quantity replaces the old line total instead of adding to it, a quantity of zero removes the item, an empty cart is not charged shipping, and invalid or out-of-range quantities are rejected.
+- `psclient/tests/productQuery.test.js` — category filtering, case-insensitive search with whitespace trimming, the three sort orders, and that sorting never modifies the array it is given.
+
+The repository layer is mocked for the service tests. The cart and query modules have no DOM dependencies at all, so they run directly in Node. None of this was possible before the enhancements, when the same function handled the HTTP request, the business logic and the SQL query, and the cart logic was tangled into inline event handlers.
 
 ## CS 499 Enhancements
 
@@ -178,10 +185,35 @@ enhancement restructured it:
 
 ### Algorithms and Data Structures
 
-Planned: replacing the shopping cart's fixed array with a hash map keyed by SKU,
-maintaining a running subtotal instead of recalculating every line on each change,
-performing currency arithmetic in integer cents, and adding trie-based product
-search with sorting and filtering.
+### Algorithms and Data Structures
+
+The shopping cart was a fixed eight-element array indexed by position, with prices
+hardcoded in the HTML as arguments to inline event handlers. Line totals were stored
+as strings produced by `.toFixed(2)`, and the subtotal loop combined them with `+`,
+which concatenates strings rather than adding numbers. With two items selected the
+page reported a subtotal of $6.33 instead of $13.97, and a grand total of $21.77
+instead of $29.95 — the shop undercharged on every multi-item order.
+
+- **Product catalog keyed by SKU** — product data moved out of the HTML into one
+  object. Lookup is O(1), and adding a product is a single entry rather than an HTML
+  edit plus an array resize plus a renumbering of indexes.
+- **Cart as a hash map** — replaced the fixed array indexed 0 through 7. Items not in
+  the cart are absent rather than zero placeholders.
+- **Integer cents throughout** — every value is a whole number of cents until display,
+  which removes the string concatenation and the floating-point rounding in one change.
+- **Running subtotal** — maintained incrementally by subtracting the old line total and
+  adding the new one, O(1) per change, replacing a full loop on every keystroke.
+- **Search and sort** — case-insensitive substring search over product names, and
+  sorting by name, price ascending or price descending, in a module with no knowledge
+  of the cart or the DOM.
+- **Rows generated from the catalog** — the page is rebuilt on every search or sort,
+  with the cart as the source of truth, so quantities survive a re-render.
+- **Shipping on an empty cart** — previously a flat $15 was charged whether or not
+  anything was selected.
+
+Search is a linear scan, which is the correct choice at this catalog size. A trie
+would be worth its complexity once the database enhancement makes the catalog large
+enough to need prefix search.
 
 ### Databases
 
