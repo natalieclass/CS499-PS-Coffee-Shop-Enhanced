@@ -89,11 +89,17 @@ function setQuantity(sku, qty) {
   }
 }
 
+function getCartItems() {
+  return Object.keys(cart).map(function (sku) {
+    return { sku: sku, quantity: cart[sku] };
+  });
+}
+
 
 if (typeof module !== 'undefined') {
   module.exports = {
   setQuantity, getQuantity, lineTotalCents, getSubtotalCents,
   taxCents, shippingCents, grandTotalCents, formatCents, clearCart,
-  setCartCatalog
+  setCartCatalog, getCartItems
 };
 }

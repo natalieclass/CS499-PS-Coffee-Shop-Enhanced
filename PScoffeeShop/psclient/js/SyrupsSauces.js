@@ -68,8 +68,39 @@ function onQuantityChange(sku) {
 
 
 function Checkout() {
-  alert("You have successfully selected items for checkout! At this time we are not processing any orders.");
-  location.assign("http://localhost:6363" + "/PSDashboard");
+  const userID = localStorage.getItem('userID');
+  if (!userID) {
+    alert('Please sign in before checking out.');
+    location.assign('/SignIn');
+    return;
+  }
+
+  const items = getCartItems();
+  if (items.length === 0) {
+    alert('Your cart is empty.');
+    return;
+  }
+
+  fetch('/api/orders', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ userID: Number(userID), items: items })
+  })
+    .then(function (response) {
+      return response.json().then(function (data) {
+        if (!response.ok) throw new Error(data.message || 'Order could not be placed');
+        return data;
+      });
+    })
+    .then(function (data) {
+      alert('Order #' + data.orderID + ' placed. Total $' + formatCents(data.totalCents));
+      clearCart();
+      renderCatalog();
+    })
+    .catch(function (err) {
+      alert(err.message);
+      console.error(err);
+    });
 }
 
 

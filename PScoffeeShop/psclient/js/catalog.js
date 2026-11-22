@@ -8,8 +8,6 @@
 // against without needing a database. Changing a price here affects the
 // tests only. To change what the shop sells, edit the database.
 
-
-
 const CATALOG = {
   'DVG-FRENCH-VANILLA': {
     name: 'DVG French Vanilla Syrup',

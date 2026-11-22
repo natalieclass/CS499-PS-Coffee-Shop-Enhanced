@@ -17,6 +17,8 @@ const customerRoutes = require('./routes/customerRoutes');
 const errorHandler = require('./middleware/errorHandler');
 const contactRoutes = require('./routes/contactRoutes');
 const productRoutes = require('./routes/productRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+psapp.use('/', orderRoutes);
 psapp.use('/', contactRoutes);
 psapp.use('/', customerRoutes);
 psapp.use('/', productRoutes);

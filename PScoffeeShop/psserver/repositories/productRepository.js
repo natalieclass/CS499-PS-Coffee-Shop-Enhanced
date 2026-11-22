@@ -27,4 +27,15 @@ async function findAllActive() {
   return catalog;
 }
 
-module.exports = { findAllActive };
+
+// Look up the current price and ID for a set of SKUs. The browser never
+// sends prices; this is where they come from.
+async function findPricedBySkus(skus) {
+  const [rows] = await pool.query(
+    'SELECT productID, sku, unitPrice FROM Product WHERE isActive = 1 AND sku IN (?)',
+    [skus]
+  );
+  return rows;
+}
+
+module.exports = { findAllActive, findPricedBySkus };
