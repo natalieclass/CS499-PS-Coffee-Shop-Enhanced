@@ -1,3 +1,4 @@
+let CATALOG = {};
 // Build the <td> markup for one product.
 // Reads the current quantity from the cart so a re-render (search, sort)
 // does not wipe out what the user already entered.
@@ -82,4 +83,18 @@ $(document).on('input', 'input[data-sku]', function () {
 $(document).on('input', '#searchBox', renderCatalog);
 $(document).on('change', '#sortSelect', renderCatalog);
 
-renderCatalog();
+fetch('/api/products')
+  .then(function (response) {
+    if (!response.ok) throw new Error('Could not load products');
+    return response.json();
+  })
+  .then(function (catalog) {
+    CATALOG = catalog;
+    setCartCatalog(catalog);
+    setQueryCatalog(catalog);
+    renderCatalog();
+  })
+  .catch(function (err) {
+    $('#syrupsRow').html('<td>Products could not be loaded right now.</td>');
+    console.error(err);
+  });

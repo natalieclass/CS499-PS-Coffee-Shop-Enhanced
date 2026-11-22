@@ -1,3 +1,15 @@
+// Test fixture only now.
+//
+// This file used to be the application's product catalog. Since Enhancement
+// Three it is no longer loaded by the browser — the catalog comes from
+// GET /api/products, which reads the Product and ProductCategory tables.
+//
+// It remains here so the cart and query unit tests have stable data to run
+// against without needing a database. Changing a price here affects the
+// tests only. To change what the shop sells, edit the database.
+
+
+
 const CATALOG = {
   'DVG-FRENCH-VANILLA': {
     name: 'DVG French Vanilla Syrup',

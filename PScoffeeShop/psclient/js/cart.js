@@ -2,9 +2,13 @@ const TAX_RATE = 0.07;
 const SHIPPING_CENTS = 1500;
 const MAX_QTY = 10;
 
-const CATALOG_DATA = (typeof module !== 'undefined')
-  ? require('./catalog.js')
-  : CATALOG;
+let CATALOG_DATA = (typeof module !== 'undefined')
+  ? require('./catalog.js')   // tests use the static fixture
+  : {};                       // browser fills this from /api/products
+
+function setCartCatalog(data) {
+  CATALOG_DATA = data;
+}
 
 const cart = {};          // sku -> quantity
 let subtotalCents = 0;    // running total; never recomputed by looping
@@ -88,7 +92,8 @@ function setQuantity(sku, qty) {
 
 if (typeof module !== 'undefined') {
   module.exports = {
-    setQuantity, getQuantity, lineTotalCents, getSubtotalCents,
-    taxCents, shippingCents, grandTotalCents, formatCents, clearCart
-  };
+  setQuantity, getQuantity, lineTotalCents, getSubtotalCents,
+  taxCents, shippingCents, grandTotalCents, formatCents, clearCart,
+  setCartCatalog
+};
 }

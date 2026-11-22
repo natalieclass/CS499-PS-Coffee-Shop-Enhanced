@@ -1,6 +1,10 @@
-const QUERY_CATALOG = (typeof module !== 'undefined')
+let QUERY_CATALOG = (typeof module !== 'undefined')
   ? require('./catalog.js')
-  : CATALOG;
+  : {};
+
+function setQueryCatalog(data) {
+  QUERY_CATALOG = data;
+}
 
 
 // Return all skus in one category, unsorted and unfiltered.
