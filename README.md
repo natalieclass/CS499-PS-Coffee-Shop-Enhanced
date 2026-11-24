@@ -305,7 +305,7 @@ and the first two had no product name column. Money columns were declared as bar
   `pscoffee_app` has only SELECT, INSERT and UPDATE on the tables the code touches, and
   cannot drop a table or read the payroll tables at all.
 
-`EERDiagram_Original.png` and `EERDiagram_Enhanced.png` show the schema before and
+`PScoffeeShopPScoffeeShopEERDiagram_Original.png` and `PScoffeeShopPScoffeeShopEERDiagram_Enhanced.png` show the schema before and
 after. In the original, `Customer` has no relationships at all.
 
 ## Author
